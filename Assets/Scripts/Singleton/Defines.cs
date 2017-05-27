@@ -27,8 +27,8 @@ public enum UIEnum
     knapsack,
     knapsackTips,
     weaponSys,
-    weaponSysTips,
     mainMeun,
+    weaponSysTips,
 }
 //UI加载路径 对应枚举
 public class UIPath
@@ -41,6 +41,9 @@ public class UIPath
         {
             case UIEnum.weaponSys:
                 path = "UI/supplysUI";
+                break;
+            case UIEnum.weaponSysTips:
+                path = "UI/weaponSysTips";
                 break;
             case UIEnum.mainMeun:
                 path = "UI/MainMeunUI";
@@ -60,6 +63,9 @@ public class UIPath
         {
             case UIEnum.weaponSys:
                 t = typeof(WeaponSysUI);
+                break;
+            case UIEnum.weaponSysTips:
+                t = typeof(WeaponSysTips);
                 break;
             case UIEnum.mainMeun:
                 t = typeof(MainMeunUI);

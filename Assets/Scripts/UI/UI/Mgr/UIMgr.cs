@@ -70,10 +70,24 @@ public class UIMgr : Singleton<UIMgr>
     public Transform getCanvasTrans(UINode node)
     {
         if (canvas == null)
-            canvas = GameObject.Find("Canvas").transform;
+        {
+            GameObject go = GameObject.Find("Canvas");
+            if (go == null)
+            {
+                go = ResMgr.Instance.load("UI/Canvas") as GameObject;
+                go.name = "Canvas";
+            }
+            canvas = go.transform;
+        }
+        if (canvas != null)
+            return getCanvasTransNode(node);
+        else
+            return null;
+    }
 
+    private Transform getCanvasTransNode(UINode node)
+    {
         Transform trans = null;
-
         switch (node)
         {
             case UINode.main:
@@ -89,15 +103,21 @@ public class UIMgr : Singleton<UIMgr>
                 trans = canvas.transform.Find("Main");
                 break;
         }
-
         return trans;
     }
-
 
     public void resetCanvasPos(Vector3 pos, Quaternion rot)
     {
         if (canvas == null)
-            canvas = GameObject.Find("Canvas").transform;
+        {
+            GameObject go = GameObject.Find("Canvas");
+            if (go == null)
+            {
+                go = ResMgr.Instance.load("UI/Canvas") as GameObject;
+                go.name = "Canvas";
+            }
+            canvas = go.transform;
+        }
         if (canvas != null)
         {
             canvas.transform.position = pos;
@@ -110,7 +130,7 @@ public class UIMgr : Singleton<UIMgr>
     {
         if (staticCamera == null)
         {
-            staticCamera = GameObject.Find("StaticCanvas").GetComponent<StaticCamera>();
+            initStaticCamera();
         }
         if (staticCamera != null)
         {
@@ -121,12 +141,26 @@ public class UIMgr : Singleton<UIMgr>
     {
         if (staticCamera == null)
         {
-            staticCamera = GameObject.Find("StaticCanvas").GetComponent<StaticCamera>();
+            initStaticCamera();
         }
         if (staticCamera != null)
         {
             staticCamera.setCountDown(count, desc);
         }
     }
-
+    public void initStaticCamera()
+    {
+        if (staticCamera == null)
+        {
+            GameObject go = GameObject.Find("StaticCanvas");
+            if (go == null)
+            {
+                go = ResMgr.Instance.load("UI/StaticCanvas") as GameObject;
+                go.name = "StaticCanvas";
+            }
+            staticCamera = go.GetComponent<StaticCamera>();
+            if (staticCamera == null)
+                staticCamera = go.AddComponent<StaticCamera>();
+        }
+    }
 }

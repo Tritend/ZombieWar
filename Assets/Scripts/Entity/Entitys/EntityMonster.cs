@@ -29,6 +29,10 @@ public class EntityMonster : EntityDynamicActor
     public override void onDamage(float damage)
     {
         this.HP -= damage;
+
+        BaseEntity agent = EntityMgr.Instance.getEntityById(1008611);
+        EffectInfo info = new EffectInfo(this.CacheTrans.position, agent);
+
         if (this.HP <= 0)
         {
             onChangeState(StateType.die);
@@ -44,10 +48,19 @@ public class EntityMonster : EntityDynamicActor
             msg3["type"] = BType.energy;
             msg3["val"] = 100 * (int)this.SonType;
             msg3.Send();
+
+            //for (int i = 0; i < 5; i++)
+            //{
+            //    EffectMgr.Instance.createEffect(20001, info);
+
+            //}
+            EffectMgr.Instance.createEffect(20001, info);
+
             clear();
         }
         else
         {
+
             onChangeState(StateType.beHit);
         }
     }

@@ -20,7 +20,7 @@ public class BloodPart : BasePart
         bgPart.transform.localScale = new Vector3(1.01f, 0.15f, 1);
         bgBloodSp = bgPart.AddComponent<SpriteRenderer>();
         bgBloodSp.sprite = SpriteMgr.Instance.getSprite("whiteblood2");
-        bgBloodSp.color = new Color(0, 0, 0, 0.15f);
+        bgBloodSp.color = new Color(0, 0, 0, 0.35f);
         bgBloodSp.sortingOrder = 0;
 
         part = new GameObject(this.PType.ToString());

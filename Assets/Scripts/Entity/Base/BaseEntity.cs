@@ -158,6 +158,7 @@ public class BaseEntity : MonoBehaviour
 
     //模型颜色改变
     private Renderer render;
+    private Light light;
     private Tweener tweener;
     public virtual void onChangeColor()
     {
@@ -166,6 +167,17 @@ public class BaseEntity : MonoBehaviour
             tweener = DOTween.To((progress) =>
             {
                 //0,0,0,1 -> 1,0,0,1
+                //light
+                if (light == null)
+                {
+                    light = this.CacheObj.GetComponentInChildren<Light>();
+                }
+                if (light != null)
+                {
+                    light.color =new Color(1,progress,progress);
+                }
+
+                //render
                 if (render == null)
                 {
                     render = this.CacheObj.GetComponentInChildren<Renderer>();
@@ -174,10 +186,20 @@ public class BaseEntity : MonoBehaviour
                 {
                     render.material.SetColor("_EmissionColor", new Color(progress, 0, 0));
                 }
-            }, 0, 1, 0.5f).OnComplete(() =>
+            }, 1, 0, 0.5f).OnComplete(() =>
             {
                 DOTween.To((progress2) =>
                 {
+                    //light
+                    if (light == null)
+                    {
+                        light = this.CacheObj.GetComponentInChildren<Light>();
+                    }
+                    if (light != null)
+                    {
+                        light.color = new Color(1, progress2, progress2);
+                    }
+
                     if (render == null)
                     {
                         render = this.CacheObj.GetComponentInChildren<Renderer>();
@@ -186,7 +208,7 @@ public class BaseEntity : MonoBehaviour
                     {
                         render.material.SetColor("_EmissionColor", new Color(progress2, 0, 0));
                     }
-                }, 1, 0, 0.5f).OnComplete(() =>
+                }, 0, 1, 0.5f).OnComplete(() =>
                 {
                     tweener.Kill(false);
                     tweener = null;

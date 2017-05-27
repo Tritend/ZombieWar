@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
+
 using UnityEngine;
 
-public class MonsterRunState : FSMState
+public class MonsterCrawlState:FSMState
 {
     private EntityDynamicActor dyAgent = null;
     private float minDis;
-
-    public MonsterRunState(BaseEntity agent) : base(agent)
+    public MonsterCrawlState(BaseEntity agent) : base(agent)
     {
-    }
-
-    public override void setStateInfo()
-    {
-        this.SType = StateType.run;
     }
 
     public override void onEnter()
@@ -22,13 +16,17 @@ public class MonsterRunState : FSMState
         dyAgent = this.agent as EntityDynamicActor;
         if (dyAgent != null)
         {
-            dyAgent.anim.CrossFade("walk", 0.2f);
-            dyAgent.navAgent.speed = 1.5f;
+            dyAgent.anim.CrossFade("crawl", 0.3f);
+            dyAgent.navAgent.speed = 3f;
             dyAgent.navAgent.Resume();
         }
         minDis = dyAgent.SonType == EntitySonType.first ? 10f : 2f;
     }
 
+    public override void setStateInfo()
+    {
+        this.SType =StateType.crawl;
+    }
     public override void onUpdate()
     {
         if (dyAgent != null)
@@ -57,4 +55,3 @@ public class MonsterRunState : FSMState
         }
     }
 }
-

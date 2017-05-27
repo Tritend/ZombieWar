@@ -12,8 +12,8 @@ public class CrystalNamePart : NamePart
     public override void create(Transform parent, EntityInfo info)
     {
         base.create(parent, info);
-        this.mesh.fontSize = 30;
-        this.mesh.color = Color.green;
+        this.mesh.fontSize = 280;
+        this.mesh.fontStyle =FontStyle.Bold;
         part.transform.localPosition = new Vector3(0, 1.2f, 0);
     }
 }

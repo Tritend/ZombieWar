@@ -5,8 +5,15 @@ using UnityEngine.UI;
 using DG.Tweening;
 using System.Collections;
 
+public struct CountDownTask
+{
+    public int Count;
+    public string Str;
+}
+
 public class StaticCamera : MonoBehaviour
 {
+    private bool isInit = false;
     private Camera myCamera;
     private GameObject blood;
     private GameObject dieBg;
@@ -16,6 +23,7 @@ public class StaticCamera : MonoBehaviour
     private Tweener tweener = null;
     private Dictionary<int, CrystalHPUIItem> showDict = new Dictionary<int, CrystalHPUIItem>();
     private List<CrystalHPUIItem> unUseLst = new List<CrystalHPUIItem>();
+    private List<CountDownTask> tasks = new List<CountDownTask>();
 
     private void Awake()
     {
@@ -35,6 +43,14 @@ public class StaticCamera : MonoBehaviour
         dieBg.SetActive(false);
         blood.GetComponent<Image>().color = new Color(1, 0, 0, 0);
         MessageCenter.Instance.addListener(MsgCmd.On_Crystal_HP_Change, onCrystalHPChange);
+        isInit = true;
+        if (tasks.Count > 0)
+        {
+            for (int i = 0; i < tasks.Count; i++)
+            {
+                setCountDown(tasks[i].Count, tasks[i].Str);
+            }
+        }
     }
 
     private void Update()
@@ -103,7 +119,15 @@ public class StaticCamera : MonoBehaviour
     //倒计时
     public void setCountDown(int count, string desc)
     {
-        StartCoroutine(countDown(count, desc));
+        if (isInit)
+            StartCoroutine(countDown(count, desc));
+        else
+        {
+            CountDownTask task = new CountDownTask();
+            task.Count = count;
+            task.Str = desc;
+            tasks.Add(task);
+        }
     }
     private IEnumerator countDown(int count, string desc)
     {

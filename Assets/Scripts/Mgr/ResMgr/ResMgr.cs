@@ -141,4 +141,9 @@ public class ResMgr : Singleton<ResMgr>
         return Resources.Load<Sprite>(path);
     }
 
+    public AudioClip LoadAudioClip(string path)
+    {
+        return Resources.Load<AudioClip>(path);
+    }
+
 }

@@ -73,10 +73,6 @@ public class WeaponSysUI : BaseUI
                     GameObject go = MonoBehaviour.Instantiate(slot, slot.transform.parent) as GameObject;
                     go.SetActive(true);
                     WeaponSysItem item = go.AddComponent<WeaponSysItem>();
-
-                    //给实例化的item赋值Data 使它们各自有自己的武器系统信息
-                    //item.Data = lst[i]; - -跟下面的setData(lst[i])一样作用
-
                     dictItem[i] = item;
                 }
                 dictItem[i].setData(lst[i]);

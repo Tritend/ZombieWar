@@ -11,6 +11,9 @@ public enum StateType
     beHit,
     die,
     spawn,
+    zombieRun,
+    shamble,
+    crawl,
 }
 
 //状态基类

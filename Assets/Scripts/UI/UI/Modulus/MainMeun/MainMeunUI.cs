@@ -31,7 +31,6 @@ public class MainMeunUI : BaseUI
                 if (item == null)
                 {
                     item = go.AddComponent<MainMeunItemUI>();
-                    item.Level = i+1;
                     item.setData(dt.ItemLst[i]);
                 }
             }

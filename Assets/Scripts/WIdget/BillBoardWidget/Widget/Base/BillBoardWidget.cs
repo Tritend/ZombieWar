@@ -19,6 +19,10 @@ public class BillBoardWidget : MonoBehaviour
             }
             return billBoardObj;
         }
+        set
+        {
+            billBoardObj = value;
+        }
     }
 
     private void Awake()

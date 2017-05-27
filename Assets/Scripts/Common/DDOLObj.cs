@@ -20,6 +20,7 @@ public class DDOLObj : MonoBehaviour
             go.AddComponent<StandaloneInputModule>();
         }
         Instance = this;
+
     }
 
     private void Start()
@@ -31,6 +32,8 @@ public class DDOLObj : MonoBehaviour
         controls.Add(new WeaponSystemControl());
         controls.Add(new MainMeunControl());
         initControl();
+        //启动界面音乐
+        SoundMgr.Instance.playAudioBg("enterbgMusic");
     }
 
 
@@ -38,10 +41,27 @@ public class DDOLObj : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.H))
         {
+            SceneMgr.Instance.onLoadScene("CrossFire", null, (progress) =>
+            {
+                DDOLCanvas.Instance.setFill(progress);
+            }, true);
+            SoundMgr.Instance.playAudioBg("bgMusic");
+        }
+        if (Input.GetKeyDown(KeyCode.J))
+        {
             SceneMgr.Instance.onLoadScene("CrossFire2", null, (progress) =>
             {
                 DDOLCanvas.Instance.setFill(progress);
             }, true);
+        }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            Camera main = Camera.main;
+            if (main != null)
+            {
+                SoundMgr.Instance.playAudioPoint("fire",main.transform.position);
+            }
         }
     }
 

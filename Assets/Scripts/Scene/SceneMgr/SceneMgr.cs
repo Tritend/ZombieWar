@@ -16,10 +16,10 @@ public class SceneInfo
     //AI生成列表
     public List<int> LstAI = new List<int>();
 
-    //水晶生成时间
-    public int CrystalTime = 0;
-    //水晶生成列表
-    public List<int> LstCrystal = new List<int>();
+    //房子生成时间
+    public int HouseTime = 0;
+    //房子生成
+    public int HouseId=0;
 }
 
 public class SceneMgr : Singleton<SceneMgr>
@@ -50,6 +50,7 @@ public class SceneMgr : Singleton<SceneMgr>
         TimeMgr.Instance.removeALLTimerHanlder();
         EntityMgr.Instance.removeAllEntity();
         UIMgr.Instance.onClear();
+        PoolMgr.Instance.clearAll();
         yield return null;
         if (!isAsync)
         {
@@ -136,12 +137,15 @@ public class SceneMgr : Singleton<SceneMgr>
                 dt.LstAI.Add(int.Parse(aiLst[j]));
             }
 
-            dt.CrystalTime = lst[i].crystalSpawnTime;
-            string[] cryLst = lst[i].crystalLst.Split(',');
-            for (int j = 0; j < cryLst.Length; j++)
-            {
-                dt.LstCrystal.Add(int.Parse(cryLst[j]));
-            }
+            dt.HouseTime = lst[i].houseSpawnTime;
+
+            dt.HouseId = int.Parse(lst[i].house);
+
+            //string[] cryLst = lst[i].crystalLst.Split(',');
+            //for (int j = 0; j < cryLst.Length; j++)
+            //{
+            //    dt.LstCrystal.Add(int.Parse(cryLst[j]));
+            //}
             dictInfo.Add(dt.LevelName, dt);
         }
     }

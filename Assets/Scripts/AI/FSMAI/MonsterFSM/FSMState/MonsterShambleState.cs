@@ -1,19 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using UnityEngine;
 
-public class MonsterRunState : FSMState
+public class MonsterShambleState:FSMState
 {
     private EntityDynamicActor dyAgent = null;
     private float minDis;
 
-    public MonsterRunState(BaseEntity agent) : base(agent)
+    public MonsterShambleState(BaseEntity agent) : base(agent)
     {
     }
 
     public override void setStateInfo()
     {
-        this.SType = StateType.run;
+        this.SType = StateType.shamble;
     }
 
     public override void onEnter()
@@ -22,8 +24,8 @@ public class MonsterRunState : FSMState
         dyAgent = this.agent as EntityDynamicActor;
         if (dyAgent != null)
         {
-            dyAgent.anim.CrossFade("walk", 0.2f);
-            dyAgent.navAgent.speed = 1.5f;
+            dyAgent.anim.CrossFade("shamble", 0.3f);
+            dyAgent.navAgent.speed = 1;
             dyAgent.navAgent.Resume();
         }
         minDis = dyAgent.SonType == EntitySonType.first ? 10f : 2f;
@@ -57,4 +59,3 @@ public class MonsterRunState : FSMState
         }
     }
 }
-

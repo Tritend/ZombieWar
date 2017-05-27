@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MonsterSpawnState : FSMState
 {
-    private float duration = 1f;
+    private float duration = 2f;
 
     public MonsterSpawnState(BaseEntity agent) : base(agent)
     {
@@ -15,6 +15,7 @@ public class MonsterSpawnState : FSMState
         this.SType = StateType.spawn;
         allowLst.Add(StateType.idle);
         allowLst.Add(StateType.beHit);
+        allowLst.Add(StateType.die);
     }
 
     public override void onEnter()

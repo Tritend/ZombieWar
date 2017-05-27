@@ -36,7 +36,7 @@ public class BulletArrow : BaseBullet
             return;
         }
         isUsed = true;
-        EffectMgr.Instance.createEffect(10005, new EffectInfo(this.transform.position), false);
+        EffectMgr.Instance.createEffect(10005, new EffectInfo(this.transform.position));
         //Collider[] cols = Physics.OverlapSphere(this.transform.position, 10);
         //for (int i = 0; i < cols.Length; i++)
         //{

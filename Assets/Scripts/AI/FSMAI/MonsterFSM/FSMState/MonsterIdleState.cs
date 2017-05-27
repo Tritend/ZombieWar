@@ -23,9 +23,9 @@ public class MonsterIdleState : FSMState
         EntityDynamicActor dyAgent = this.agent as EntityDynamicActor;
         if (dyAgent != null)
         {
-            dyAgent.anim.CrossFade("idle", 0.1f);
+            dyAgent.anim.CrossFade("idle", 0.2f);
         }
-        minDis = dyAgent.SonType == EntitySonType.first ? 0.3f : 2f;
+        minDis = dyAgent.SonType == EntitySonType.first ? 10f : 2f;
     }
 
     public override void onUpdate()
@@ -67,7 +67,7 @@ public class MonsterIdleState : FSMState
                 bool isReach = Vector3.Distance(dyAgent.CacheTrans.position, dyAgent.Target.CacheTrans.position) < minDis;
                 if (!isReach)
                 {
-                    dyAgent.onChangeState(StateType.run);
+                    dyAgent.onChangeState(StateType.zombieRun);
                 }
                 else
                 {

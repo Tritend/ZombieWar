@@ -100,21 +100,6 @@ public class EntityMainPlayer : EntityDynamicActor
         RightEvents.ButtonTwoPressed += onOpenWeaponSysUI;
         this.WType = WeaponType.gun;
     }
-    /// <summary>
-    /// 无参数的武器系统UI
-    /// </summary>
-    private void onOpenWeaponSysUI()
-    {
-        Message msg = new Message(MsgCmd.Open_WeaponSystem_UI, this);
-        msg["Pos"] = getCanvasPos();
-        msg["Rot"] = getCanvasRot();
-        msg.Send();
-    }
-    /// <summary>
-    /// 使用VRTK 打开武器系统UI
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="args"></param>
     private void onOpenWeaponSysUI(object sender, ControllerInteractionEventArgs args)
     {
         Message msg = new Message(MsgCmd.Open_WeaponSystem_UI, this);
@@ -153,7 +138,6 @@ public class EntityMainPlayer : EntityDynamicActor
         this.WType = type;
     }
 
-
     public sealed override void onUpdate()
     {
         base.onUpdate();
@@ -164,11 +148,6 @@ public class EntityMainPlayer : EntityDynamicActor
         if (Input.GetKeyDown(KeyCode.N))
         {
             this.WType = WeaponType.gun;
-        }
-        //按I打开武器系统UI
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            onOpenWeaponSysUI();
         }
     }
 

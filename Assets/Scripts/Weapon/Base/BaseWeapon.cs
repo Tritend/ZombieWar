@@ -56,11 +56,7 @@ public class BaseWeapon : MonoBehaviour
     //普通的武器 射击
     public virtual void onFire()
     {
-        //测试玩家属性改变
-        //Message msg = new Message(MsgCmd.On_Change_Value, this);
-        //msg["type"] = BType.money;
-        //msg["val"] = 11;
-        //msg.Send();
+        SoundMgr.Instance.playAudioPoint("fire",this.transform.position);
 
         fxSystem.Play();
         Ray ray = new Ray(firePoint.position, firePoint.forward);
@@ -71,19 +67,21 @@ public class BaseWeapon : MonoBehaviour
             {
                 EffectInfo info = new EffectInfo(hitInfo.point, new Vector3(180, 0, 0), hitInfo.collider.transform);
                 EffectMgr.Instance.createEffect(10001, info);
-                EffectMgr.Instance.createEffect(10004, info, false);
+                EffectInfo info2 = new EffectInfo(hitInfo.point, new Vector3(180, 0, 0), hitInfo.collider.transform);
+                EffectMgr.Instance.createEffect(10004, info2);
             }
             else if (hitInfo.collider.tag == "Ground")
             {
+                //值传递  引用传递
                 EffectInfo info = new EffectInfo(hitInfo.point, new Vector3(-90, 0, 0), hitInfo.collider.transform);
                 EffectMgr.Instance.createEffect(10002, info);
-                EffectMgr.Instance.createEffect(10003, info, false);
+                EffectInfo info2 = new EffectInfo(hitInfo.point, new Vector3(-90, 0, 0), hitInfo.collider.transform);
+                EffectMgr.Instance.createEffect(10003, info2);
             }
             else if (hitInfo.collider.gameObject.GetComponent<EntityMonster>() != null)
             {
-                Debug.Log(hitInfo.point);
                 EffectInfo info = new EffectInfo(new Vector3(hitInfo.point.x, hitInfo.point.y - 1f, hitInfo.point.z), new Vector3(0, 0, 0), hitInfo.collider.transform);
-                EffectMgr.Instance.createEffect(10007, info, false);
+                EffectMgr.Instance.createEffect(10007, info);
                 int damage = (int)(this.info.BaseDamage + this.info.AddDamage * this.agent.getValue(BType.energy) / 100);
                 hitInfo.collider.gameObject.GetComponent<EntityMonster>().onDamage(damage);
             }

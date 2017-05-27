@@ -41,6 +41,10 @@ public class EntityMgr : Singleton<EntityMgr>
         if (dictInfo.ContainsKey(tempId))
         {
             data = dictInfo[tempId];
+            if (tempId != 2001)
+            {
+                data.SpawnPos = new Vector3(UnityEngine.Random.Range(-90f, 90f), 0, -33);
+            }
             data.UID = uid;
         }
         if (data == null)

@@ -1,34 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using UnityEngine;
 
-public class MonsterRunState : FSMState
+public class MonsterZombieRunState : FSMState
 {
     private EntityDynamicActor dyAgent = null;
     private float minDis;
-
-    public MonsterRunState(BaseEntity agent) : base(agent)
+    public int speed = 0;
+    public MonsterZombieRunState(BaseEntity agent) : base(agent)
     {
+
     }
 
     public override void setStateInfo()
     {
-        this.SType = StateType.run;
+        this.SType = StateType.zombieRun;
     }
 
     public override void onEnter()
     {
         base.onEnter();
+        speed = UnityEngine.Random.Range(1, 10);
         dyAgent = this.agent as EntityDynamicActor;
+        //随机出来的速度 决定僵尸行进的姿态
         if (dyAgent != null)
         {
-            dyAgent.anim.CrossFade("walk", 0.2f);
-            dyAgent.navAgent.speed = 1.5f;
+            if (speed < 3)
+            {
+                dyAgent.onChangeState(StateType.shamble);
+                return;
+            }
+            else if (speed >= 3 && speed <= 5)
+            {
+                dyAgent.onChangeState(StateType.crawl);
+                return;
+            }
+            dyAgent.anim.CrossFade("zombieRun", 0.3f);
+            dyAgent.navAgent.speed = speed;
             dyAgent.navAgent.Resume();
         }
         minDis = dyAgent.SonType == EntitySonType.first ? 10f : 2f;
     }
-
     public override void onUpdate()
     {
         if (dyAgent != null)
@@ -57,4 +71,3 @@ public class MonsterRunState : FSMState
         }
     }
 }
-

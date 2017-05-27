@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SceneNormalControl : BaseSceneControl
 {
-    private int cryCount;
+    private int houseCount;
     private int monsterCount;
 
     public override void onAwake()
@@ -27,7 +27,7 @@ public class SceneNormalControl : BaseSceneControl
     {
         if (this.info != null)
         {
-            DDOLObj.Instance.StartCoroutine(createEntityCrystal(info.CrystalTime));
+            DDOLObj.Instance.StartCoroutine(createEntityHouse(info.HouseTime));
             //DDOLObj.Instance.StartCoroutine(createEntityMonster(info.AISpawnTimer));
             TimeMgr.Instance.setTimerHandler(new TimerHandler(info.AIWave * info.AISpawnTimer + 1, true, info.AISpawnTimer, createMonster, false));
         }
@@ -36,7 +36,7 @@ public class SceneNormalControl : BaseSceneControl
     //创建怪
     protected void createMonster()
     {
-        for (int i = 0; i < info.LstAI.Count; i++)
+        for (int i = 0; i <  info.LstAI.Count; i++)
         {
             EntityMgr.Instance.createEntity(info.LstAI[i], uid);
             uid++;
@@ -45,7 +45,7 @@ public class SceneNormalControl : BaseSceneControl
 
     public override void onSetData()
     {
-        this.cryCount = this.info.LstCrystal.Count;
+        this.houseCount = 1;/*this.info.HouseId.Count;*/
         this.monsterCount = this.info.LstAI.Count * this.info.AIWave;
     }
 
@@ -60,8 +60,8 @@ public class SceneNormalControl : BaseSceneControl
     private void onCrystalDie(Message msg)
     {
         //水晶全部死亡 游戏结束  败
-        this.cryCount--;
-        if (this.cryCount <= 0)
+        this.houseCount--;
+        if (this.houseCount <= 0)
             StartCoroutine(gameOverByFail(8f, "水晶全部死亡...准备重新开始游戏"));
     }
     //怪物都死亡
@@ -83,6 +83,7 @@ public class SceneNormalControl : BaseSceneControl
         {
             DDOLCanvas.Instance.setFill(progress);
         }, true);
+        SoundMgr.Instance.playAudioBg("enterbgMusic");
     }
     private IEnumerator gameOverBySuccess(float time, string str)
     {
@@ -95,6 +96,7 @@ public class SceneNormalControl : BaseSceneControl
             {
                 DDOLCanvas.Instance.setFill(progress);
             }, true);
+        SoundMgr.Instance.playAudioBg("bgMusic");
     }
 
 }

@@ -13,6 +13,6 @@ public class WeaponSysItemData : BaseData
     public string Name;
     public string Desc;
     public Vector3 Scale = new Vector3(100, 100, 1);
-    public Vector3 Pos;
+    public Vector3 TipsPos = Vector3.zero;
 }
 
